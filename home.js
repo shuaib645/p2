@@ -1,6 +1,11 @@
+import { db } from "./firebase-config.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
 const productContainer = document.getElementById("product-container");
 
-db.collection("products").get().then((querySnapshot) => {
+// Fetch products from Firestore
+const loadProducts = async () => {
+    const querySnapshot = await getDocs(collection(db, "products"));
     querySnapshot.forEach((doc) => {
         const product = doc.data();
         const productCard = document.createElement("div");
@@ -12,4 +17,6 @@ db.collection("products").get().then((querySnapshot) => {
         `;
         productContainer.appendChild(productCard);
     });
-});
+};
+
+loadProducts();

@@ -1,3 +1,7 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyCj98gerP4l4ztKfG1rPo5UzK9dgKFjlII",
     authDomain: "myprojectp1-70080.firebaseapp.com",
