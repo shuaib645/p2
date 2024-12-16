@@ -1,5 +1,6 @@
 import { db } from "./firebase-config.js";
 import { ref, push } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
 
 const uploadForm = document.getElementById("upload-form");
 
@@ -8,26 +9,29 @@ uploadForm.addEventListener("submit", async (e) => {
 
     const name = document.getElementById("product-name").value;
     const description = document.getElementById("product-description").value;
-
     const imageFile = document.getElementById("product-image").files[0];
-    const reader = new FileReader();
 
-    reader.onload = async () => {
-        const base64Image = reader.result;
+    if (imageFile) {
+        const storage = getStorage();
+        const imageRef = storageRef(storage, 'products/' + imageFile.name);
 
+        // Upload the image to Firebase Storage
         try {
-            // Push a new product to the database
-            await push(ref(db, "products"), {
+            const snapshot = await uploadBytes(imageRef, imageFile);
+            const imageUrl = await getDownloadURL(snapshot.ref); // Get image URL
+
+            // Store product data in Realtime Database
+            const productRef = ref(db, "products");
+            await push(productRef, {
                 name,
                 description,
-                image: base64Image,
+                image: imageUrl // Store image URL
             });
+
             alert("Product uploaded successfully!");
             uploadForm.reset();
         } catch (error) {
             console.error("Error uploading product:", error);
         }
-    };
-
-    reader.readAsDataURL(imageFile); // Convert the image to base64
+    }
 });

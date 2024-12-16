@@ -21,6 +21,8 @@ const loadProducts = () => {
                 `;
                 productContainer.appendChild(productCard);
             });
+        } else {
+            productContainer.innerHTML = "<p>No products available</p>";
         }
     }, (error) => {
         console.error("Error fetching products:", error);
