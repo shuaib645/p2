@@ -1,5 +1,5 @@
 import { db } from "./firebase-config.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+import { ref, push } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
 const uploadForm = document.getElementById("upload-form");
 
@@ -16,7 +16,8 @@ uploadForm.addEventListener("submit", async (e) => {
         const base64Image = reader.result;
 
         try {
-            await addDoc(collection(db, "products"), {
+            // Push a new product to the database
+            await push(ref(db, "products"), {
                 name,
                 description,
                 image: base64Image,
@@ -28,5 +29,5 @@ uploadForm.addEventListener("submit", async (e) => {
         }
     };
 
-    reader.readAsDataURL(imageFile);
+    reader.readAsDataURL(imageFile); // Convert the image to base64
 });

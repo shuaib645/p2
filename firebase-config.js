@@ -1,9 +1,6 @@
-// Import the required Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
-// Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCj98gerP4l4ztKfG1rPo5UzK9dgKFjlII",
   authDomain: "myprojectp1-70080.firebaseapp.com",
@@ -14,12 +11,7 @@ const firebaseConfig = {
   appId: "1:711696264195:web:cfe0a6f7a0cf1e6f4ef236"
 };
 
-// Initialize Firebase App
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-// Initialize Firestore and Storage
-const db = getFirestore(app);
-const storage = getStorage(app);
-
-// Export the initialized Firestore and Storage for use in other scripts
-export { db, storage };
+export { db };
